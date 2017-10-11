@@ -1,0 +1,84 @@
+<!-- -->
+<header>
+	<h2 class="head_title">申請一覧</h2>
+    <a href="/logout"><i class="fa fa-sign-out"></i></a>
+</header>
+<!-- -->
+<div class="cover hide" id="navi">
+	<ul class="navi_list">
+		<li id="nav_apply">
+			申請入力
+		</li>
+		<li id="nav_list">
+			申請一覧
+		</li>
+	</ul>
+</div>
+<!-- -->
+<div class="central hide" id="applyDiv">
+    <form method="POST" action="/exwork" class="form">
+        <fieldset class="form_field">
+            <label class="form_title" for="workDay">勤務日</label>
+            <input class="text_field datepick" type="text" id="workDay" name="workDay">
+            <hr>
+            <label class="form_title" for="workTime">時間数</label>
+            <input class="text_field timepick" type="text" id="workTime" name="workTime">
+            <hr>
+            <label class="form_title" for="workType">区分</label>
+            <select id="workType" name="workType">
+                <option value="残業">残業</option>
+                <option value="早出">早出</option>
+                <option value="休出">休出</option>
+            </select>
+        </fieldset>
+        <input type="submit" value="登録" class="form_submit">
+    </form>
+</div>
+<!-- -->
+<div class="central" id="listDiv">
+	<div class="table_head">
+		<a id="getcsv" target="_blank"><i class="fa fa-download"></i></a>
+	</div>
+	<table id="worklist">
+		<tr>
+			<th>日付</th>
+			<th>時間</th>
+			<th>種別</th>
+			<th>実績</th>
+		</tr>
+		<%=
+			MyBbs::Post.where(:userid=>login_user[:id]).order("workday asc").map {|post|
+				erb :view, :locals => {:post => post}, :layout=>false
+			}.join("")
+		%>
+	</table>
+</div>
+<!-- -->
+<div class="cover hide" id="actCover"></div>
+<div class="hide" id="actModal">
+	<div class="central" id="actForm">
+	    <form method="POST" action="/actwork" class="form">
+	        <fieldset class="form_field">
+	            <input type="text" id = "actid" name="actid" class=hide>
+	            <label class="form_title" for="actDay">勤務日</label>
+	            <input class="text_field datepick" type="text" id="actDay" name="actDay" disabled="disabled">
+	            <hr>
+	            <label class="form_title" for="actTime">時間数</label>
+	            <input class="text_field timepick" type="text" id="actTime" name="actTime" disabled="disabled">
+	            <hr>
+	            <label class="form_title" for="actType">区分</label>
+	            <select id="actType" name="actType" disabled="disabled">
+	                <option value="残業">残業</option>
+	                <option value="早出">早出</option>
+	                <option value="休出">休出</option>
+	            </select>
+	            <hr>
+	            <label class="form_title"  for="actWork">実績</label>
+	            <input class="text_field timepick"  type="text" id="actWork" name="actWork"/>
+	     </fieldset>
+	        <input type="submit" value="登録" class="form_submit act_submit">
+	    </form>
+	    <hr>
+	    <div class="act_cancel"><p>キャンセル</p></div>
+	</div>
+</div>

@@ -1,0 +1,6 @@
+<tr class="postData" data-id="<%= h post.id %>">
+	<td class="workday"><%= Date.parse(h post.workday).strftime("%m/%d") %></td>
+	<td class="extime"><%= Time.parse(h post.extime).strftime("%H:%M") %></td>
+	<td class="extype"><%= h post.extype %></td>
+	<td class="actwork"><%= post.actual.present?  ? Time.parse(h post.actual).strftime("%H:%M") : "" %></td>
+</tr>
